@@ -1,0 +1,24 @@
+{
+    "production": {
+        "aws_region": "eu-central-1",
+        "profile_name": "default",
+	      "keep_warm":"false",
+        "project_name": "zap-server",
+        "runtime": "python3.6",
+        "s3_bucket": "zappa-1234577563812",
+        "app_function": "http_pred_server.app",
+        "memory_size": 3008,
+        "timeout_seconds": 900,
+	      "slim_handler":"true",
+	      "include": ["lib/libxgboost.so"],
+        "events": [{
+            "function": "s3_pred_server.run_prediction",
+            "event_source": {
+                  "arn":  "arn:aws:s3:::DOWNLOAD_BUCKET_NAME",
+                  "events": [
+                    "s3:ObjectCreated:*"
+                  ]
+               }
+            }],
+    }
+}
